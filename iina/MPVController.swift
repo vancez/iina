@@ -46,6 +46,8 @@ class MPVController: NSObject {
   var mpvClientName: UnsafePointer<CChar>!
   var mpvVersion: String!
 
+  var mpvCliArguments: [String String]()
+
   lazy var queue = DispatchQueue(label: "com.colliderli.iina.controller", qos: .userInitiated)
 
   unowned let player: PlayerCore
@@ -312,6 +314,14 @@ class MPVController: NSObject {
       }
     }
 
+    // Set cli options.
+    for (name, value) in mpvCliArguments {
+      let status = mpv_set_option_string(mpv, name, value)
+      if status < 0 {
+        Utility.showAlert("extra_option.error", arguments: [name, value, status])
+      }
+    }
+
     // Load external scripts
 
     // Load keybindings. This is still required for mpv to handle media keys or apple remote.
@@ -468,6 +478,11 @@ class MPVController: NSObject {
     if checkError {
       chkErr(returnValue)
     }
+  }
+
+  // Cli argument
+  func addCliArgument(_ name: String, _ value: String) {
+    mpvCliArguments[name] = value
   }
 
   // Set property

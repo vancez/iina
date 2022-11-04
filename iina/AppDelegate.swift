@@ -625,7 +625,7 @@ struct CommandLineStatus {
 
   func assignMPVArguments(to playerCore: PlayerCore) {
     for arg in mpvArguments {
-      playerCore.mpv.setString(arg.0, arg.1)
+      playerCore.mpv.addCliArgument(arg.0, arg.1)
     }
   }
 }
