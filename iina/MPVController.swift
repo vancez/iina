@@ -46,7 +46,7 @@ class MPVController: NSObject {
   var mpvClientName: UnsafePointer<CChar>!
   var mpvVersion: String!
 
-  var mpvCliArguments: [String: String]()
+  var mpvCliArguments: [String: String] = [:]
 
   lazy var queue = DispatchQueue(label: "com.colliderli.iina.controller", qos: .userInitiated)
 
